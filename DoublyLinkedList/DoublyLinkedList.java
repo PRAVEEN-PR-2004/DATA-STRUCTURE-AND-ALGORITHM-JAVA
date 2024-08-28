@@ -50,10 +50,20 @@ public class DoublyLinkedList
         {
             tem = tem.next;
         }
-        newNode.next = tem.next;
-        newNode.prev = tem;
-        tem.next.prev = newNode;
-        tem.next=newNode;
+        if(tem==tail)
+        {
+            newNode.prev = tem;
+            tem.next=newNode;
+            tail=newNode;
+        }
+        else
+        {
+
+            newNode.next = tem.next;
+            newNode.prev = tem;
+            tem.next.prev = newNode;
+            tem.next=newNode;
+        }
 
 
 
@@ -76,7 +86,56 @@ public class DoublyLinkedList
             tail= newnode;
         }
     }
+    public void delete(int pos)
+    {
+        if(head==null)
+        {
+            return;
+        }
+        if(pos==0)
+        {
+            if(head==tail)
+            {
+                head=null;
+                tail=null;
 
+            }
+            else
+            {
+                head=head.next;
+                head.prev=null;
+
+            }
+            return;
+        }
+        Node tem = head;
+        Node pre = null;
+
+        for(int i=1;i<=pos;i++)
+        {
+            pre = tem;
+            tem  =tem.next;
+            if(tem==null)
+            {
+                return;
+            }
+        }
+        if(tem==tail)
+        {
+            tail=pre;
+            pre.next=null;
+            tem.prev=null;
+        }
+        else
+        {
+
+            pre.next  =tem.next;
+            tem.next.prev = pre;
+            tem.next=null;
+            tem.prev=null;
+        }
+
+    }
 
 
 

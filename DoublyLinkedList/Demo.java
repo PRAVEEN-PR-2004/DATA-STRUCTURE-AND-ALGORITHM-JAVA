@@ -8,10 +8,11 @@ public class Demo {
         dlist.insertAtBeginning(20);
         dlist.insertAtBeginning(40);
         dlist.insertAtBeginning(50);
-        dlist.insertAtNormal(0);
-       // dlist.insertAtanyPosition(4, 30);
+        //dlist.insertAtNormal(0);
+       
+       dlist.delete(3);
         dlist.display();
-        // System.out.println();
-        // dlist.revdisplay();
+         System.out.println();
+         dlist.revdisplay();
     }
 }
