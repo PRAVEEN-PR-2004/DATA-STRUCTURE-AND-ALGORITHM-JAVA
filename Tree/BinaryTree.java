@@ -1,81 +1,83 @@
+import java.util.*;
 
-class Node{
-    int data;
-    Node left,right;
-    Node(int d)
-    {
-        data = d;
-        left=null;
+class Node {
+    int val;
+    Node left;
+    Node right;
+
+    Node(int v) {
+        val = v;
+        left = null;
         right = null;
-
     }
 }
 
-
 public class BinaryTree {
-    Node root;
-    BinaryTree(int r)
-    {
-        root = new Node(r);
-    }
-    public static void InsertAtRight(Node r,int data)
-    {
-        Node newnode = new Node(data);
-        r.right = newnode;
-    }
-    public static void InsertAtLeft(Node r,int data)
-    {
-        Node newnode = new Node(data);
-        r.left = newnode;
-    }
-    public static void Inorder(Node root)
-    {
-        if(root!=null)
-        {
-            Inorder(root.left);
-            System.out.print(root.data+" ");
-            Inorder(root.right);
 
+    // Method to insert a node in level order
+    public static Node insert(Node root, int v) {
+        Node tem = root;
+        Queue<Node> store = new LinkedList<>();
+        store.add(tem);
+
+        while (!store.isEmpty()) {
+            Node cur = store.poll();
+            if (cur.left != null) {
+                store.add(cur.left);
+            } else {
+                cur.left = new Node(v);
+                break;
+            }
+
+            if (cur.right != null) {
+                store.add(cur.right);
+            } else {
+                cur.right = new Node(v);
+                break;
+            }
+        }
+        return root;
+    }
+
+    // Method for level order traversal
+    public static void levelOrder(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        Queue<Node> store = new LinkedList<>();
+        store.add(root);
+
+        while (!store.isEmpty()) {
+            Node cur = store.poll();
+            System.out.print(cur.val + " ");
+
+            if (cur.left != null) {
+                store.add(cur.left);
+            }
+            if (cur.right != null) {
+                store.add(cur.right);
+            }
         }
     }
-    public static void Preorder(Node root)
-    {
-        if(root!=null)
-        {
-            System.out.print(root.data+" ");
-            Preorder(root.left);
-            Preorder(root.right);
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of nodes:");
+        int n = sc.nextInt();
+
+        // Create the root node
+        System.out.println("Enter root value:");
+        Node root = new Node(sc.nextInt());
+
+        // Insert remaining nodes
+        for (int i = 1; i < n; i++) {
+            System.out.println("Enter value for node " + (i + 1) + ":");
+            root = insert(root, sc.nextInt());
         }
-        
+
+        // Print the tree in level order
+        System.out.println("Level Order Traversal:");
+        levelOrder(root);
     }
-    public static void Postorder(Node root)
-    {
-        if(root!=null)
-        {
-            Postorder(root.left);
-            Postorder(root.right);
-            System.out.print(root.data+" ");
-
-        }
-    }
-    public static void main(String[] args)
-    {
-        BinaryTree bt = new BinaryTree(10);
-        InsertAtRight(bt.root,15);
-        InsertAtLeft(bt.root.right,12);
-        InsertAtLeft(bt.root, 5);
-        InsertAtLeft(bt.root.left, 3);
-        InsertAtRight(bt.root.left, 8);
-        Preorder(bt.root);
-        System.out.println();
-        Inorder(bt.root);
-        System.out.println();
-        Postorder(bt.root);
-        System.out.println();
-        
-
-
-    }
-
 }
